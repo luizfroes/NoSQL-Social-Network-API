@@ -1,5 +1,13 @@
 const { Router } = require("express");
 
+const {
+  getThoughts,
+  getThoughtById,
+  createThoughts,
+  updateThoughtById,
+  deleteThoughtById,
+} = require("../../controllers/api/thoughts");
+
 const reactions = require("./reactions");
 
 const router = Router();

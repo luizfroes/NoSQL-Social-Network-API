@@ -1,5 +1,13 @@
 const { Router } = require("express");
 
+const {
+  getUsers,
+  getUserById,
+  createUser,
+  updateUserById,
+  deleteUserById,
+} = require("../../controllers/api/users");
+
 const friends = require("./friends");
 
 const router = Router();
