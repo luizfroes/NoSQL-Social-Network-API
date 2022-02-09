@@ -4,7 +4,8 @@
   "description": "NoSQL: Social Network API is social network web application where users can share their thoughts, react to friends’ thoughts, and create a friend list.",
   "main": "index.js",
   "scripts": {
-    "start": "npm src/index.js",
+    "start": "node src/index.js",
+    "seed": "node src/seeds/index.js",
     "dev": "nodemon src/index.js"
   },
   "repository": {

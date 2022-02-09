@@ -16,13 +16,12 @@ const reactionSchema = {
   },
   createdAt: {
     type: Date,
-    default: format(new Date()),
+    default: format(new Date(Date.now()), "MM/dd/yyyy"),
   },
   username: {
     type: String,
     required: true,
   },
-  reactions: [Reaction],
 };
 
 const schema = new Schema(reactionSchema);
