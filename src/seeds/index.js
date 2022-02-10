@@ -14,16 +14,7 @@ const init = async () => {
 
     console.log("[INFO]: Database connection successful");
 
-    // Step 1 seed all users
-    await User.deleteMany({});
-    await User.insertMany(users);
-
-    console.log("[INFO]: Successfully seeded users");
-
-    // Step 2 get all users from DB
-    const usersFromDb = await User.find({});
-
-    // Step 3 seed all thoughts
+    // Step 1 seed all thoughts
     await Thought.deleteMany({});
     await Thought.insertMany(thoughts);
 
@@ -31,20 +22,49 @@ const init = async () => {
 
     const thoughtsFromDb = await Thought.find({});
 
-    // Step 4 map through the thoughts and link each thought the specific user (get the username of the thought and find the user object in users from DB and get _id of that user)
-    const newUsers = thoughtsFromDb.map((thought) => {
+    // Step 2 map through the thoughts and link each thought the specific user
+    thoughtsFromDb.forEach((thought) => {
       const username = thought.username;
 
       const thoughtId = thought._id.toString();
 
-      const user = usersFromDb.find((user) => user.username === username);
+      const user = users.find((user) => user.username === username);
 
-      user.thoughts.push(thoughtId);
-
-      return user;
+      user.thoughts = [...user.thoughts, thoughtId];
     });
 
-    // once you get _id of user, insert the thought _id in to the thoughts array of the user
+    // Step 3 seed all users
+
+    await User.deleteMany({});
+    await User.insertMany(users);
+
+    const usersFromDb = await User.find({});
+
+    const userIdsArray = usersFromDb.map((user) => {
+      idsArray = user._id.toString();
+
+      return idsArray;
+    });
+
+    // Step 5 seed friends with users
+    const friendsPromises = usersFromDb.map(async (user) => {
+      // update operation on the friends and push it into the friends array
+      const shuffledUserIds = userIdsArray.sort(() => 0.5 - Math.random());
+
+      const slicedArray = shuffledUserIds.slice(
+        Math.floor(Math.random() * shuffledUserIds.length)
+      );
+
+      const friends = slicedArray.filter(
+        (userId) => userId !== user._id.toString()
+      );
+
+      await User.findByIdAndUpdate(user._id, { friends });
+    });
+
+    console.log("[INFO]: Successfully seeded users");
+
+    //await mongoose.disconnect();
   } catch (error) {
     console.log(`[ERROR]: Database connection failed | ${error.message}`);
   }

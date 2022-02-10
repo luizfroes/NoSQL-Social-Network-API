@@ -1,4 +1,3 @@
-const req = require("express/lib/request");
 const { Schema, model } = require("mongoose");
 
 const { validateEmail } = require("../helpers/index");
@@ -15,16 +14,16 @@ const userSchema = {
     required: true,
     unique: true,
     required: "Email address is required",
-      validate: [validateEmail, "Please fill a valid email address"],
-      match: [
-        /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
-        "Please fill a valid email address",
-      ],
+    validate: [validateEmail, "Please fill a valid email address"],
+    match: [
+      /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
+      "Please fill a valid email address",
+    ],
   },
   thoughts: [
     {
       type: Schema.Types.ObjectId,
-      ref: "thoughts",
+      ref: "thought",
     },
   ],
   friends: [
