@@ -16,7 +16,7 @@ const reactionSchema = {
   },
   createdAt: {
     type: Date,
-    default: format(new Date(Date.now()), "MM/dd/yyyy"),
+    default: format(new Date(Date.now()), "dd/MM/y H:mm:ss OOOO"),
   },
   username: {
     type: String,

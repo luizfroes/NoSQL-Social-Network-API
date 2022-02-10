@@ -7,8 +7,7 @@ const thoughts = require("./data/thoughts");
 
 const init = async () => {
   try {
-    console.log(users);
-    await mongoose.connect("mongodb://localhost:27017/studentStatsDb", {
+    await mongoose.connect("mongodb://localhost:27017/socialNetworkDb", {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     });
@@ -30,7 +29,21 @@ const init = async () => {
 
     console.log("[INFO]: Successfully seeded thoughts");
 
+    const thoughtsFromDb = await Thought.find({});
+
     // Step 4 map through the thoughts and link each thought the specific user (get the username of the thought and find the user object in users from DB and get _id of that user)
+    const newUsers = thoughtsFromDb.map((thought) => {
+      const username = thought.username;
+
+      const thoughtId = thought._id.toString();
+
+      const user = usersFromDb.find((user) => user.username === username);
+
+      user.thoughts.push(thoughtId);
+
+      return user;
+    });
+
     // once you get _id of user, insert the thought _id in to the thoughts array of the user
   } catch (error) {
     console.log(`[ERROR]: Database connection failed | ${error.message}`);
