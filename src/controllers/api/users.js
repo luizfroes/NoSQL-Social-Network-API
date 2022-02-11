@@ -43,9 +43,21 @@ const createUser = async (req, res) => {
   }
 };
 
-const updateUserById = (req, res) => {
-  const { userId } = req.params;
-  res.send("updateUserById");
+const updateUserById = async (req, res) => {
+  try {
+    const { userId } = req.params;
+
+    const { username, email } = req.body;
+
+    const user = await User.findByIdAndUpdate(userId, { username, email });
+
+    res.json({ success: true, data: user });
+  } catch (error) {
+    console.log(`[ERROR]: Failed to get user | ${error.message}`);
+    return res
+      .status(500)
+      .json({ success: false, error: "Failed to get user" });
+  }
 };
 
 const deleteUserById = async (req, res) => {
