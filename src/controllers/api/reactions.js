@@ -3,6 +3,9 @@ const createReaction = (req, res) => {
 };
 
 const deleteReactionById = (req, res) => {
+  const { thoughtId, reactionId } = req.params;
+  console.log(thoughtId);
+  console.log(reactionId);
   res.send("deleteReactionById");
 };
 
