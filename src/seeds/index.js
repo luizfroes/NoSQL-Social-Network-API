@@ -64,7 +64,7 @@ const init = async () => {
 
     console.log("[INFO]: Successfully seeded users");
 
-    //await mongoose.disconnect();
+    // await mongoose.disconnect();
   } catch (error) {
     console.log(`[ERROR]: Database connection failed | ${error.message}`);
   }
