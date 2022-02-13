@@ -1,5 +1,7 @@
 const { Schema, model } = require("mongoose");
 
+const thoughts = require("./Thought");
+
 const { validateEmail } = require("../helpers/index");
 
 const userSchema = {
@@ -38,7 +40,6 @@ const schema = new Schema(userSchema, {
   toJSON: {
     getters: true,
   },
-  id: false,
 });
 
 schema.virtual("friendCount").get(function () {

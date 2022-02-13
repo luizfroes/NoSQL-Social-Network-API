@@ -1,6 +1,6 @@
-const { Schema, isValidObjectId } = require("mongoose");
+const { Schema } = require("mongoose");
 
-const { format } = require("date-fns");
+const formatDate = require("../utils/util");
 
 const reactionSchema = {
   reactionId: {
@@ -14,16 +14,21 @@ const reactionSchema = {
     minLength: 1,
     maxLength: 280,
   },
-  createdAt: {
-    type: Date,
-    default: format(new Date(Date.now()), "dd/MM/y H:mm:ss OOOO"),
-  },
   username: {
     type: String,
     required: true,
   },
+  createdAt: {
+    type: Date,
+    default: Date.now,
+    get: formatDate,
+  },
 };
 
-const schema = new Schema(reactionSchema);
+const schema = new Schema(reactionSchema, {
+  toJSON: {
+    getters: true,
+  },
+});
 
 module.exports = schema;

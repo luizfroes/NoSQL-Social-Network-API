@@ -61,7 +61,7 @@ const createThoughts = async (req, res) => {
 
 const updateThoughtById = async (req, res) => {
   try {
-    const { thoughtId } = req.params.id;
+    const { thoughtId } = req.params;
     const { thoughtText } = req.body;
 
     if (thoughtText) {
