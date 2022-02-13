@@ -7,7 +7,7 @@ const {
 
 const router = Router({ mergeParams: true });
 
-router.post("/reactions/:reactionId", createReaction);
+router.post("/reactions", createReaction);
 router.delete("/reactions/:reactionId", deleteReactionById);
 
 module.exports = router;

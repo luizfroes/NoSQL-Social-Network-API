@@ -42,10 +42,10 @@ const deleteFriendById = async (req, res) => {
 
     res.json({ success: true, data: newUser.friends });
   } catch (error) {
-    console.log(`[ERROR]: Failed to add friend | ${error.message}`);
+    console.log(`[ERROR]: Failed to delete friend | ${error.message}`);
     return res
       .status(500)
-      .json({ success: false, error: "Failed to add friend" });
+      .json({ success: false, error: "Failed to delete friend" });
   }
 };
 
