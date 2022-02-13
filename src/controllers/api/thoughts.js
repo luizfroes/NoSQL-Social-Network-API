@@ -1,4 +1,4 @@
-const { Thought } = require("../../models");
+const { Thought, User } = require("../../models");
 
 const getThoughts = async (req, res) => {
   try {
@@ -30,36 +30,62 @@ const getThoughtById = async (req, res) => {
 
 const createThoughts = async (req, res) => {
   try {
-    const { thoughtText, username } = req.body;
+    const { thoughtText, username, userId } = req.body;
 
-    const thought = await Thought.create({ thoughtText, username });
+    if (thoughtText && username && userId) {
+      const newThought = await Thought.create({
+        thoughtText,
+        username,
+        userId,
+      });
 
-    res.json({ success: true, data: thought });
+      await User.findByIdAndUpdate(
+        { _id: userId },
+        { $push: { thoughts: newThought._id } }
+      );
+
+      return res.json({ success: true, data: newThought });
+    }
+
+    return res.status(400).json({
+      success: false,
+      error: "Missing thought text, username, and user id.",
+    });
   } catch (error) {
     console.log(`[ERROR]: Failed to create thought | ${error.message}`);
     return res
       .status(500)
-      .json({ success: false, error: "Failed to create thought" });
+      .json({ success: false, error: "Failed to create thought." });
   }
 };
 
 const updateThoughtById = async (req, res) => {
   try {
-    const { thoughtId } = req.params;
+    const { thoughtId } = req.params.id;
+    const { thoughtText } = req.body;
 
-    const { thoughtText, username } = req.body;
+    if (thoughtText) {
+      const updatedThought = await Thought.findByIdAndUpdate(
+        thoughtId,
+        {
+          $set: {
+            thoughtText,
+          },
+        },
+        { returnDocument: "after" }
+      );
 
-    const thought = await Thought.findByIdAndUpdate(thoughtId, {
-      thoughtText,
-      username,
+      return res.json({ success: true, data: updatedThought });
+    }
+    return res.status(400).json({
+      success: false,
+      error: "Missing thought text.",
     });
-
-    res.json({ success: true, data: thought });
   } catch (error) {
-    console.log(`[ERROR]: Failed to create thought | ${error.message}`);
+    console.log(`[ERROR]: Failed to update thought | ${error.message}`);
     return res
       .status(500)
-      .json({ success: false, error: "Failed to create thought" });
+      .json({ success: false, error: "Failed to update thought." });
   }
 };
 
