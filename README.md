@@ -118,7 +118,7 @@ npm run start
 
 ## Video Walkthrough
 
-Click [here](https://drive.google.com/file/d/1aiBXw9HOSrFSPMXvBw3UhTdr1OYQLiTQ/view?usp=sharing) to access the Video Walkthrough.
+Click [here](https://drive.google.com/file/d/1TaGpGaNPoufQHmjHV7jYYEO0mLl9hwjk/view?usp=sharing) to access the Video Walkthrough.
 
 <a name="questions"></a>
 
