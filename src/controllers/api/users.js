@@ -39,7 +39,7 @@ const createUser = async (req, res) => {
 
     return res.status(400).json({
       success: false,
-      error: "Please provide the username and email.",
+      error: "Missing username and email.",
     });
   } catch (error) {
     console.log(`[ERROR]: Failed to create user | ${error.message}`);
@@ -69,7 +69,7 @@ const updateUserById = async (req, res) => {
     }
     return res.status(400).json({
       success: false,
-      error: "Please provide the username and email.",
+      error: "Missing username and email.",
     });
   } catch (error) {
     console.log(`[ERROR]: Failed to update user | ${error.message}`);
