@@ -119,7 +119,7 @@ npm run start
 
 ## Endpoints
 
-### `GET api/users | api/thoughts`
+### GET api/users | api/thoughts
 
 - returns a list of all documents, thoughts or users and all associated schemas (friends and reactions)
 
