@@ -8,6 +8,7 @@
 - [Installation](#installation)
 - [Seed the data](#seed-the-data)
 - [Usage](#Usage)
+- [Endpoints](#endpoints)
 - [Video Walkthrough](#video-walkthrough)
 - [Questions](#questions)
 
@@ -112,6 +113,361 @@ To use the application follow the steps below:
 
 ```
 npm run start
+```
+
+<a name="endpoints"></a>
+
+## Endpoints
+
+### `GET api/users | api/thoughts`
+
+- returns a list of all documents, thoughts or users and all associated schemas (friends and reactions)
+
+Sample response (users):
+
+```json
+{
+  "success": true,
+  "data": [
+    {
+      "_id": "6209807e651447db602659b6",
+      "thoughtText": "NoSQL is killing me",
+      "username": "gracekelly",
+      "reactions": [
+        {
+          "reactionId": "6209807e651447db602659b7",
+          "reactionBody": "Yes, it is!!",
+          "username": "tonyjunior",
+          "_id": "6209807e651447db602659b8",
+          "createdAt": "Sunday February 13th, 2022 @ 10:04:46 p.m.",
+          "id": "6209807e651447db602659b8"
+        },
+        {
+          "reactionId": "6209807e651447db602659b9",
+          "reactionBody": "Really??",
+          "username": "carolbaracat",
+          "_id": "6209807e651447db602659ba",
+          "createdAt": "Sunday February 13th, 2022 @ 10:04:46 p.m.",
+          "id": "6209807e651447db602659ba"
+        },
+        {
+          "reactionId": "6209807e651447db602659bb",
+          "reactionBody": "I don't think so!!",
+          "username": "bobsmith",
+          "_id": "6209807e651447db602659bc",
+          "createdAt": "Sunday February 13th, 2022 @ 10:04:46 p.m.",
+          "id": "6209807e651447db602659bc"
+        }
+      ],
+      "createdAt": "Sunday February 13th, 2022 @ 10:04:46 p.m.",
+      "__v": 0,
+      "reactionCount": 3,
+      "id": "6209807e651447db602659b6"
+    }
+  ]
+}
+```
+
+### GET /api/users/:id | api/thoughts/:id
+
+- returns a specific document by it's id
+
+Sample response (user):
+
+```json
+{
+  "success": true,
+  "data": {
+    "_id": "6209807e651447db602659b6",
+    "thoughtText": "NoSQL is killing me",
+    "username": "gracekelly",
+    "reactions": [
+      {
+        "reactionId": "6209807e651447db602659b7",
+        "reactionBody": "Yes, it is!!",
+        "username": "tonyjunior",
+        "_id": "6209807e651447db602659b8",
+        "createdAt": "Sunday February 13th, 2022 @ 10:04:46 p.m.",
+        "id": "6209807e651447db602659b8"
+      },
+      {
+        "reactionId": "6209807e651447db602659b9",
+        "reactionBody": "Really??",
+        "username": "carolbaracat",
+        "_id": "6209807e651447db602659ba",
+        "createdAt": "Sunday February 13th, 2022 @ 10:04:46 p.m.",
+        "id": "6209807e651447db602659ba"
+      },
+      {
+        "reactionId": "6209807e651447db602659bb",
+        "reactionBody": "I don't think so!!",
+        "username": "bobsmith",
+        "_id": "6209807e651447db602659bc",
+        "createdAt": "Sunday February 13th, 2022 @ 10:04:46 p.m.",
+        "id": "6209807e651447db602659bc"
+      }
+    ],
+    "createdAt": "Sunday February 13th, 2022 @ 10:04:46 p.m.",
+    "__v": 0,
+    "reactionCount": 3,
+    "id": "6209807e651447db602659b6"
+  }
+}
+```
+
+### POST /api/users | api/thoughts
+
+- creates a new document, thoughts or users in the database
+
+Request body example (thought):
+
+```json
+{
+  "thoughtText": "Here's a cool thought...",
+  "username": "bobsmith",
+  "userId": "6209807e651447db602659a6"
+}
+```
+
+Sample response:
+
+```json
+{
+  "success": true,
+  "data": {
+    "thoughtText": "Here's a cool thought...",
+    "username": "bobsmith",
+    "_id": "620a8bf03e56a47e5a2c80ee",
+    "createdAt": "Monday February 14th, 2022 @ 05:05:52 p.m.",
+    "reactions": [],
+    "__v": 0,
+    "reactionCount": 0,
+    "id": "620a8bf03e56a47e5a2c80ee"
+  }
+}
+```
+
+### PUT /api/users/:id | api/thoughts/:id
+
+- updates a specific a document by it's id
+
+Request body example (thought):
+
+```json
+{
+  "thoughtText": "Here's a very cool thought..."
+}
+```
+
+Sample response:
+
+```json
+{
+  "success": true,
+  "data": {
+    "_id": "620a8bf03e56a47e5a2c80ee",
+    "thoughtText": "Here's a very cool thought...",
+    "username": "bobsmith",
+    "createdAt": "Monday February 14th, 2022 @ 05:05:52 p.m.",
+    "reactions": [],
+    "__v": 0,
+    "reactionCount": 0,
+    "id": "620a8bf03e56a47e5a2c80ee"
+  }
+}
+```
+
+### DELETE api/{users|thoughts}/:id
+
+- deletes a specific document by it's id from the database
+
+Sample response (thought):
+
+```json
+{
+  "success": true,
+  "data": {
+    "_id": "620a8bf03e56a47e5a2c80ee",
+    "thoughtText": "Here's a very cool thought...",
+    "username": "bobsmith",
+    "createdAt": "Monday February 14th, 2022 @ 05:05:52 p.m.",
+    "reactions": [],
+    "__v": 0,
+    "reactionCount": 0,
+    "id": "620a8bf03e56a47e5a2c80ee"
+  }
+}
+```
+
+### POST /api/users/:userId/friends/
+
+- creates a new friend in a specific user's friends array
+
+Request body example:
+
+```json
+{
+  "_id": "6209807e651447db602659a6"
+}
+```
+
+Sample response:
+
+```json
+{
+  "success": true,
+  "data": {
+    "_id": "6209807e651447db602659a7",
+    "username": "jackswift",
+    "email": "jackswift@email.com",
+    "thoughts": ["6209807e651447db602659cb"],
+    "friends": ["6209807e651447db602659a9", "6209807e651447db602659a6"],
+    "__v": 0,
+    "friendCount": 2,
+    "id": "6209807e651447db602659a7"
+  }
+}
+```
+
+### DELETE /api/users/:userId/friends/:friendId
+
+- deletes a specific friend from a specific user's friends array
+
+Sample response:
+
+```json
+{
+  "success": true,
+  "data": {
+    "_id": "6209807e651447db602659a7",
+    "username": "jackswift",
+    "email": "jackswift@email.com",
+    "thoughts": ["6209807e651447db602659cb"],
+    "friends": ["6209807e651447db602659a9"],
+    "__v": 0,
+    "friendCount": 1,
+    "id": "6209807e651447db602659a7"
+  }
+}
+```
+
+### POST /api/thoughts/:thoughtId/reactions/
+
+- creates a new reaction in a specific thought's reactions array
+
+Request body example:
+
+```json
+{
+  "reactionBody": "Fantastic!!!",
+  "username": "bobsmith"
+}
+```
+
+Sample response:
+
+```json
+{
+  "success": true,
+  "data": {
+    "_id": "6209807e651447db602659b6",
+    "thoughtText": "NoSQL is killing me",
+    "username": "gracekelly",
+    "reactions": [
+      {
+        "reactionId": "6209807e651447db602659b7",
+        "reactionBody": "Yes, it is!!",
+        "username": "tonyjunior",
+        "_id": "6209807e651447db602659b8",
+        "createdAt": "Sunday February 13th, 2022 @ 10:04:46 p.m.",
+        "id": "6209807e651447db602659b8"
+      },
+      {
+        "reactionId": "6209807e651447db602659b9",
+        "reactionBody": "Really??",
+        "username": "carolbaracat",
+        "_id": "6209807e651447db602659ba",
+        "createdAt": "Sunday February 13th, 2022 @ 10:04:46 p.m.",
+        "id": "6209807e651447db602659ba"
+      },
+      {
+        "reactionId": "6209807e651447db602659bb",
+        "reactionBody": "I don't think so!!",
+        "username": "bobsmith",
+        "_id": "6209807e651447db602659bc",
+        "createdAt": "Sunday February 13th, 2022 @ 10:04:46 p.m.",
+        "id": "6209807e651447db602659bc"
+      },
+      {
+        "reactionId": "620a8f933e56a47e5a2c814f",
+        "reactionBody": "Fantastic!!!",
+        "username": "bobsmith",
+        "_id": "620a8f933e56a47e5a2c8150",
+        "createdAt": "Monday February 14th, 2022 @ 05:21:23 p.m.",
+        "id": "620a8f933e56a47e5a2c8150"
+      }
+    ],
+    "createdAt": "Sunday February 13th, 2022 @ 10:04:46 p.m.",
+    "__v": 0,
+    "reactionCount": 4,
+    "id": "6209807e651447db602659b6"
+  }
+}
+```
+
+### DELETE /api/thoughts/:thoughtId/reactions/:reactionId
+
+- deletes a specific reaction from a specific thought's reactions array
+
+Sample response:
+
+```json
+{
+  "success": true,
+  "data": {
+    "_id": "6209807e651447db602659b6",
+    "thoughtText": "NoSQL is killing me",
+    "username": "gracekelly",
+    "reactions": [
+      {
+        "reactionId": "6209807e651447db602659b7",
+        "reactionBody": "Yes, it is!!",
+        "username": "tonyjunior",
+        "_id": "6209807e651447db602659b8",
+        "createdAt": "Sunday February 13th, 2022 @ 10:04:46 p.m.",
+        "id": "6209807e651447db602659b8"
+      },
+      {
+        "reactionId": "6209807e651447db602659b9",
+        "reactionBody": "Really??",
+        "username": "carolbaracat",
+        "_id": "6209807e651447db602659ba",
+        "createdAt": "Sunday February 13th, 2022 @ 10:04:46 p.m.",
+        "id": "6209807e651447db602659ba"
+      },
+      {
+        "reactionId": "6209807e651447db602659bb",
+        "reactionBody": "I don't think so!!",
+        "username": "bobsmith",
+        "_id": "6209807e651447db602659bc",
+        "createdAt": "Sunday February 13th, 2022 @ 10:04:46 p.m.",
+        "id": "6209807e651447db602659bc"
+      },
+      {
+        "reactionId": "620a8f933e56a47e5a2c814f",
+        "reactionBody": "Fantastic!!!",
+        "username": "bobsmith",
+        "_id": "620a8f933e56a47e5a2c8150",
+        "createdAt": "Monday February 14th, 2022 @ 05:21:23 p.m.",
+        "id": "620a8f933e56a47e5a2c8150"
+      }
+    ],
+    "createdAt": "Sunday February 13th, 2022 @ 10:04:46 p.m.",
+    "__v": 0,
+    "reactionCount": 4,
+    "id": "6209807e651447db602659b6"
+  }
+}
 ```
 
 <a name="video-walkthrough"></a>
